@@ -1,0 +1,105 @@
+% !TEX root = template.tex
+
+% \AtBeginSection[]{
+%     \begin{frame}{目次}
+%         \tableofcontents[currentsection, hideallsubsections]
+%     \end{frame}
+% }
+
+\def\SlideTitle{スライドのタイトルです}
+
+\author[私です]{小松和暉}
+\title[スライドの例です]{\SlideTitle}
+\institute[所属です]{豊橋技術科学大学}
+\date{\today}
+
+\begin{frame}[t,plain,noframenumbering]{}
+    % ロゴを入れる
+    \begin{tikzpicture}[overlay]
+        \node at (\paperwidth-12ex,-1.2cm) {
+          \includegraphics[width=7ex]{logo/tut_logo.pdf}
+        };
+    \end{tikzpicture}%
+
+    \vspace{2cm}
+    % \vfill
+
+    \begin{rightnote}
+    \begin{center}
+        {\LARGE
+        XXXXXに関する調査
+        }
+    \end{center}
+    \end{rightnote}
+
+    % \vspace{0.5cm}
+    \vfill
+
+    \begin{center}
+        \begin{tabular}{rrl}
+            $\dagger$〇〇〇大学&〇&山田太郎 \\
+            $\dagger\dagger$〇〇〇大学&&天伯太郎 \\
+            $\dagger$&&雲雀四郎之助 \\
+        \end{tabular}
+
+        % \vspace{0.5cm}
+        \vfill
+
+        {
+        AAAAAAAA学会　AAAAAAAA研究会\\
+        X月研究会@YYYYY大学
+        }
+    \end{center}
+\end{frame}
+
+
+\framewithnote{フーリエ変換とその逆変換}
+{
+\headuline{CA}{\textbf{フーリエ変換}}
+
+\UnderlineB{信号$x(t)$}から\UnderlineA{周波数成分$X(f)$}を求める積分変換
+\begin{align*}
+\UnderlineA{$X(f)$} = \int_{-\infty}^{\infty} \UnderlineB{$x(t)$} \mathrm{e}^{-j2\pi ft} \mathrm{d}t
+\end{align*}
+
+\vspace{1em}
+\headuline{CA}{\textbf{逆フーリエ変換}}
+
+\UnderlineA{周波数成分$X(f)$}から\UnderlineB{信号$x(t)$}を再構成する積分変換
+\begin{align*}
+    \UnderlineB{$x(t)$} = \int_{-\infty}^{\infty} \UnderlineA{$X(f)$} \mathrm{e}^{j2\pi ft} \mathrm{d}f
+\end{align*}
+
+}
+{
+\rightnotebox{メモ1}{\\
+\UnderlineA{周波数成分$X(f)$}を信号の\textbf{スペクトル}と呼ぶ
+}
+\rightnotebox{注意1}{\\
+順変換と逆変換で$\mathrm{e}$の肩に乗っている$j2\pi f t$の符号が異なることに注意
+}
+}
+
+
+\framewithnote{その2}{
+\begin{infobox}{あいうえお}
+\EmpA{かき}くけこ
+\end{infobox}
+\begin{alertbox}{さしすせそ}
+たちつてと
+\end{alertbox}
+
+% \headuline{\textcolor{CA}{みだし}\hfill}
+\headuline{CA}{\textbf{逆フーリエ変換}}
+
+
+\headuline{CB}{みだし}
+}{}
+
+\begin{frame}[t]{タイトル}
+    \begin{itemize}
+        \item<1-> 項目1
+        \item<2-> 項目2
+        \item<3-> 項目3
+    \end{itemize}
+\end{frame}

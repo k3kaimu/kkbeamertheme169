@@ -1,0 +1,201 @@
+%% KK's beamer theme based on Flip's beamer theme 2012
+%$ Compile this file. 
+%%
+%% Copyright 2012 by Flip Tanedo and Kazuki Komatsu
+%% This file may be distributed and/or modified
+%% 	1. under the LaTeX Project Public License and/or
+%% 	2. under the GNU Public License.
+
+% 16:9なのか4:3なのかを指定
+\newif\ifisWideFrame
+\isWideFrametrue%   16:9
+% \isWideFramefalse% 4:3
+
+
+\ifisWideFrame
+\documentclass[dvipdfmx,12pt,aspectratio=3218]{beamer}
+\usetheme[
+  bullet=circle,		% Other option: square
+  bigpagenumber,		% circled page number on lower right
+  topline=true,			% colored bar at the top of the frame 
+  shadow=false,			% Shading for beamer blocks
+  ]{Flip}
+\else
+\documentclass[dvipdfmx,12pt]{beamer}
+\usetheme[
+  bullet=circle,		% Other option: square
+  bigpagenumber,		% circled page number on lower right
+  topline=true,			% colored bar at the top of the frame 
+  shadow=false,			% Shading for beamer blocks
+  ]{Flip}
+\fi
+
+% フォント関係
+\usepackage{bxdpx-beamer}
+\usepackage{pxjahyper}
+\usepackage{minijs}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[scaled=1]{helvet}
+\usepackage[deluxe,expert]{otf}
+
+% 生成されるPDFのバージョンを1.7にする
+\usepackage[1.7]{bxpdfver}
+
+% ページのサイズを変更する
+\usepackage{changepage}
+
+%% Protects fonts from Beamer screwing with them
+%% http://tex.stackexchange.com/questions/10488/force-computer-modern-in-math-mode
+\usefonttheme{professionalfonts}
+
+% 既定をゴシック体に
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Usual LaTeX Packages %
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{ifthen}
+\usepackage{tcolorbox}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools,xparse}
+\usepackage{graphicx}
+\usepackage{bbm}                % for \mathbbm{1} (unit matrix)
+\usepackage{amsthm}				% For theorem environment
+\usepackage{multirow}			% For multi row cells in table
+\usepackage{arydshln} 			% For dashed lines in arrays and tables
+\usepackage{blox}
+\usepackage{svg}
+\usepackage{transparent}
+\usepackage{pgfgantt}
+\usepackage{ulem}
+\usepackage{setspace}
+\usepackage{tikz}
+\usepackage{pxpgfmark}
+\usepackage{braket}
+\usepackage{exscale}
+\usepackage {textpos}
+\usepackage[abs]{overpic}
+\usetikzlibrary{shapes,arrows,calc,decorations,decorations.text,decorations.pathreplacing,decorations.markings,decorations.pathmorphing}
+
+% 表中改行コマンド\Centerstackなど
+\usepackage[usestackEOL]{stackengine}
+
+\input{defcolorcmds.tex}   % コマンドの読み込み
+
+% そのframe環境の中に何枚のスライドがあるか
+\makeatletter
+\newcommand*{\inserttotalslidenumber}{\pgfmathparse{int(\beamer@endpageofframe-\beamer@startpageofframe+1)}\pgfmathresult}
+
+
+\newcommand{\insertslidenumberandtotal}{(\insertslidenumber/\inserttotalslidenumber)}
+
+% ページ番号を付加
+\newcounter{slideinframetotalcounter}
+\newcounter{slidenumberminusone}
+
+\newcommand{\frametitleline}{\par\vskip-12pt\hrulefill}
+
+% タイトルの設定
+\setbeamertemplate{frametitle}{%
+%タイトルの右端にロゴを表示
+\begin{tikzpicture}[overlay]
+  \node at (\paperwidth-5ex,0.7ex) {
+    \includegraphics[width=2.7ex]{logo/tut_logo.pdf}
+  };
+\end{tikzpicture}%
+% タイトル
+\insertframetitle% 
+% タイトルの後に (1/2) のように，frame環境中で何枚目のスライドか挿入する
+% ただし，frame環境に1枚しかスライドがない場合には表示しない
+% \setcounter{slideinframetotalcounter}{\beamer@endpageofframe-\beamer@startpageofframe+1}%
+% \ifnum \value{slideinframetotalcounter}>1 {\insertslidenumberandtotal} \else{} \fi%
+% %　タイトルの下に線を入れる
+\frametitleline%
+}
+
+
+% スライド下部の　[著者(所属)][タイトル][ページ番号/トータルページ数]　の部分
+% copy from beamerouterthemeFlip.sty with some changes
+\setbeamertemplate{footline}
+{%
+  \leavevmode% 
+\hbox{%
+  \begin{beamercolorbox}[wd=.25\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=1.1cm, rightskip=.3cm plus1fil]{author in head/foot}%
+    % 発表者名（所属名）
+    \usebeamerfont{author in head/foot}\insertshortauthor（\insertshortinstitute）%
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.75\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
+    % タイトル
+    \usebeamerfont{title in head/foot}{\insertshorttitle}%
+    \hskip2ex plus1fill%
+    % \insertpagenumber\,/\,\insertpresentationendpage %% Want FRAME, not SLIDE number
+    % \insertframenumber/\inserttotalframenumber
+ \end{beamercolorbox}%
+}%
+
+% This is a complete kludge for the faint white line which appears
+% between the beamer color boxes above. (It doesnt appear in presentation mode
+% but sometimes looks funny when the pdfs are viewed in a window)
+\begin{tikzpicture}[overlay]
+  \usebeamercolor[bg]{author in head/foot}
+  \draw[thick] (0,3.625ex) -- (\paperwidth,3.625ex);
+  \draw (.2\paperwidth,0) -- (.2\paperwidth,3.625ex);
+  \draw[thick] (0,0) -- (\paperwidth,0);
+\end{tikzpicture}
+
+
+\begin{tikzpicture}[overlay]
+  \usebeamercolor[bg]{author in head/foot}%
+  \draw[fill] (\paperwidth-3.625ex,3.625ex) circle (6ex);%
+  \usebeamercolor[fg]{author in head/foot}%
+  \draw[fill] (\paperwidth-3.625ex,3.625ex) circle (5ex);%
+  \usebeamercolor[bg]{author in head/foot}%
+  % スライド番号は分数形式 \frac{number}{total} にする
+  \node at (\paperwidth-3.625ex,4ex) {%
+    % ページ番号 / トータルページ数 の形式
+    % \large$\frac{\insertpagenumber}{\insertpresentationendpage}$%
+    % frame番号 / トータルframe数 の形式にするには以下を代わりに使う
+    % \large$\frac{\insertframenumber}{\inserttotalframenumber}$%
+    \setcounter{slideinframetotalcounter}{\beamer@endpageofframe-\beamer@startpageofframe+1}%
+    \setcounter{slidenumberminusone}{\beamer@slidenumber-1}%
+    \ifnum \value{slideinframetotalcounter}>1 {\large$\frac{\insertframenumber+\frac{\theslidenumberminusone}{\inserttotalslidenumber}}{\inserttotalframenumber}$} \else{\large$\frac{\insertframenumber}{\inserttotalframenumber}$} \fi%
+  };%
+\end{tikzpicture}
+}
+\makeatother
+
+
+\graphicspath{{figures/}}	% Put all images in this directory. Avoids clutter.
+
+% フォントサイズと行間
+\AtBeginDocument{\fontsize{14}{18}\selectfont}
+\setbeamertemplate{itemize/enumerate subbody begin}{\fontsize{14}{18}
+\selectfont}
+
+% セクションの番号付け
+\setbeamertemplate{section in toc}[sections numbered]
+
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Additional  settings %
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% To use external nodes; http://www.texample.net/tikz/examples/beamer-arrows/
+\tikzstyle{every picture}+=[remember picture]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Actual content below %
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% It's much nicer to have all the content in a separate file
+\include{content}
+
+
+\end{document}

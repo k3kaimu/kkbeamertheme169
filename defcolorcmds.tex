@@ -1,0 +1,212 @@
+
+\definecolor{cobalt}{rgb}{0.0, 0.28, 0.67}
+
+% matplotlibの色
+\definecolor{C0}{rgb}{0.12156862745098039, 0.4666666666666667, 0.7058823529411765}
+\definecolor{C1}{rgb}{1.0, 0.4980392156862745, 0.054901960784313725}
+\definecolor{C2}{rgb}{0.17254901960784313, 0.6274509803921569, 0.17254901960784313}
+\definecolor{C3}{rgb}{0.8392156862745098, 0.15294117647058825, 0.1568627450980392}
+\definecolor{C4}{rgb}{0.5803921568627451, 0.403921568627451, 0.7411764705882353}
+\definecolor{C5}{rgb}{0.5490196078431373, 0.33725490196078434, 0.29411764705882354}
+\definecolor{C6}{rgb}{0.8901960784313725, 0.4666666666666667, 0.7607843137254902}
+\definecolor{C7}{rgb}{0.4980392156862745, 0.4980392156862745, 0.4980392156862745}
+\definecolor{C8}{rgb}{0.7372549019607844, 0.7411764705882353, 0.13333333333333333}
+\definecolor{C9}{rgb}{0.09019607843137255, 0.7450980392156863, 0.8117647058823529}
+
+% % 青, 赤, 黄色
+\colorlet{CBlue}{cobalt}
+\colorlet{CRed}{C3}
+\colorlet{CYellow}{C1}
+
+% 第1色，第2色, 第3色の定義
+\colorlet{CA}{cobalt}
+\colorlet{CB}{C3}
+\colorlet{CC}{C1}
+\colorlet{CText}{black!85}
+
+% Beamerのフォントの色を変更する
+\setbeamercolor{normal text}{fg=CText}
+\setbeamercolor{titlelike}{fg=CA,bg=white}
+\setbeamercolor{frametitle}{fg=CA,bg=white}
+
+\setbeamercolor{description item}{fg=CText}
+
+
+\newcommand{\TextCA}[1]{\textcolor{CA}{#1}}
+\newcommand{\TextCB}[1]{\textcolor{CB}{#1}}
+\newcommand{\TextCC}[1]{\textcolor{CC}{#1}}
+
+
+% 文字に背景色を付けます
+\newcommand{\Background}[2]{\tikz[baseline=(x.base)]{\node[rectangle,rounded corners,fill=#1!30](x){#2};}}
+\newcommand{\Backgroundcap}[4][0cm]{\tikz[baseline=(x.base)]{\node[rectangle,rounded corners,fill=#2!30](x){#3} node[below=#1 of x, color=#2]{#4};}}
+
+\newcommand{\BackgroundA}[1]{\Background{CA}{#1}}
+\newcommand{\BackgroudAcap}[3][0cm]{\Background[#1]{CA}{#2}{#3}}
+\newcommand{\BackgroundB}[1]{\Background{CB}{#1}}
+\newcommand{\BackgroudBcap}[3][0cm]{\Background[#1]{CB}{#2}{#3}}
+\newcommand{\BackgroundC}[1]{\Background{CC}{#1}}
+\newcommand{\BackgroudCcap}[3][0cm]{\Background[#1]{CC}{#2}{#3}}
+
+
+% 文字を線で囲みます
+\newcommand{\RoundedRect}[2]{\tikz[baseline=(x.base)]{\node[rectangle,rounded corners,draw=#1,line width=0.5mm](x){#2};}}
+\newcommand{\RoundedRectcap}[4][0cm]{\tikz[baseline=(x.base)]{\node[rectangle,rounded corners,draw=#2,line width=0.5mm](x){#3} node[below=#1 of x, color=#2]{#4};}}
+\newcommand{\RoundedRectDash}[3]{\tikz[baseline=(x.base)]{\node[rectangle,rounded corners,draw=#1,line width=0.5mm,#2](x){#3};}}
+\newcommand{\RoundedRectDashcap}[5][0cm]{\tikz[baseline=(x.base)]{\node[rectangle,rounded corners,draw=#2,line width=0.5mm,#3](x){#4} node[below=#1 of x, color=#2]{#5};}}
+
+\newcommand{\RoundedRectA}[1]{\RoundedRectDash{CA}{dashed}{#1}}
+\newcommand{\RoundedRectAcap}[3][0cm]{\RoundedRectDash[#1]{CA}{dashed}{#2}{#3}}
+\newcommand{\RoundedRectB}[1]{\RoundedRectDash{CB}{dotted}{#1}}
+\newcommand{\RoundedRectBcap}[3][0cm]{\RoundedRectDash[#1]{CB}{dotted}{#2}{#3}}
+\newcommand{\RoundedRectC}[1]{\RoundedRectDash{CC}{solid}{#1}}
+\newcommand{\RoundedRectCcap}[3][0cm]{\RoundedRectDash[#1]{CC}{solid}{#2}{#3}}
+
+
+\newcommand{\UnderlineDashcap}[6][0cm]{%
+  \tikz[baseline=(x.base)]{%
+    \node[inner sep=1.5pt,outer ysep=0pt,outer xsep=-2pt,color=#2] (x) {#5};
+    \ifthenelse{\equal{#4}{zigzag}}{%
+      \draw[decorate,decoration={zigzag,amplitude=0.4mm,segment length=2mm},color=#3,line width=0.5mm] (x.south west) -- (x.south east);
+    }{\ifthenelse{\equal{#4}{snake}}{%
+      \draw[decorate,decoration={snake,amplitude=0.4mm,segment length=2mm},color=#3,line width=0.5mm] (x.south west) -- (x.south east);
+    }{\ifthenelse{\equal{#4}{coil}}{%
+      \draw[decorate,decoration={coil,amplitude=0.4mm,segment length=2mm},color=#3,line width=0.5mm] (x.south west) -- (x.south east);
+    }{\ifthenelse{\equal{#4}{bumps}}{%
+      \draw[decorate,decoration={bumps,amplitude=0.8mm,segment length=4mm},color=#3,line width=0.5mm] (x.south west) -- (x.south east);
+    }{\draw[#4,line width=0.5mm,color=#3,line width=0.5mm] (x.south west) -- (x.south east);
+    }}}}%
+    \ifthenelse{\equal{#6}{}}{}{%
+      \node[below=#1 of x, color=#3]{#6};
+    }%
+  }%
+}%
+
+\newcommand{\UnderlineDash}[4]{\UnderlineDashcap[0cm]{#1}{#2}{#3}{#4}{}}
+
+
+\newcommand{\UnderlineA}[1]{\UnderlineDash{CText}{CA}{solid}{#1}}
+\newcommand{\UnderlineAcap}[3][0cm]{\UnderlineDashcap[#1]{CText}{CA}{solid}{#2}{#3}}
+\newcommand{\UnderlineB}[1]{\UnderlineDash{CText}{CB}{dashed}{#1}}
+\newcommand{\UnderlineBcap}[3][0cm]{\UnderlineDashcap[#1]{CText}{CB}{dashed}{#2}{#3}}
+\newcommand{\UnderlineC}[1]{\UnderlineDash{CText}{CC}{zigzag}{#1}}
+\newcommand{\UnderlineCcap}[3][0cm]{\UnderlineDashcap[#1]{CText}{CC}{zigzag}{#2}{#3}}
+
+\newcommand{\EmpA}[1]{\Background{CA}{#1}}
+\newcommand{\EmpAcap}[3][0cm]{\Background[#1]{CA}{#2}{#3}}
+\newcommand{\EmpB}[1]{\Background{CB}{#1}}
+\newcommand{\EmpBcap}[3][0cm]{\Background[#1]{CB}{#2}{#3}}
+\newcommand{\EmpC}[1]{\Background{CC}{#1}}
+\newcommand{\EmpCcap}[3][0cm]{\Background[#1]{CC}{#2}{#3}}
+
+% \btVFillを入れることで，ページの下部にテキストを表示できる
+\newcommand{\btVFill}{\vskip0pt plus 1filll}
+% \btVFillを活用したFootnote環境
+\newenvironment{Footnote}[1][8pt]{
+  \btVFill
+  % \begin{spacing}{0.5}
+  \fontsize{#1}{0pt}\selectfont
+}{}
+
+
+% カラーボックス tcolorbox の設定
+% These options will be applied to all `tcolorboxes`
+\tcbuselibrary{raster}
+\tcbset{%
+  noparskip,
+  colback=gray!10, %background color of the box
+  colframe=gray!40, %color of frame and title background
+  coltext=black, %color of body text
+  coltitle=black, %color of title text 
+  fonttitle=\gtfamily,
+  left=4pt, right=4pt,
+}
+
+% alertbox と infobox の宣言
+\newtcolorbox{alertbox}[1]{colback=white, colframe=CB!90, fonttitle=\gtfamily, coltext=black!80, coltitle=white, title=#1}
+\newtcolorbox{infobox}[1]{colback=white, colframe=CA!90, fonttitle=\gtfamily, coltext=black!80, coltitle=white, title=#1}
+
+\newtcolorbox{rightnote}{left=0pt, right=0pt, top=0pt, bottom=0pt, colback=CA!15, colframe=white, width=\dimexpr\textwidth\relax, enlarge left by=0mm, boxsep=5pt, arc=0pt, outer arc=0pt}
+
+% \newcommand{\headuline}[2]{\textcolor{#1}{#2} \bgroup\markoverwith{\textcolor{#1!50}{\rule[0.5ex]{2pt}{1.5pt}}}\ULon{\hfill}}
+
+\newcommand{\headuline}[2]{\textcolor{#1}{#2}\textcolor{#1!40}{\dotfill}}
+
+\newcommand{\rightnotebox}[2]{
+\begin{rightnote}
+\footnotesize
+\ifx&#1&%
+% #1 is empty
+#2
+\else
+% #1 is nonempty
+\textcolor{CA!90}{#1}
+#2
+\fi
+\end{rightnote}
+}
+
+
+% 使い方．0.5の部分を省略するとbodyとnoteが0.77:0.21になる
+% \framewithnote[0.5]{テスト3}
+% {
+% body
+% }
+% {
+% note
+% }
+\newcommand{\framewithnote}[4][.76]{
+\ifisWideFrame
+  % 16:9
+  \renewcommand{\frametitleline}{\par\vskip-12pt\rule{#1\textwidth}{0.1pt}}
+  \begin{frame}[t]{#2}
+  \begin{columns}[T,onlytextwidth]
+  \begin{column}{#1\textwidth}
+  % left column
+  #3
+  \end{column}
+  \begin{column}{.01\textwidth}
+  \end{column}
+  \begin{column}{\textwidth-#1\textwidth-.01\textwidth+0.75cm}
+  \vspace{-\baselineskip}% 右カラムは上に詰める
+  \vspace{-0.2cm}% 右カラムは上に詰める
+  \ifx&#4&%
+  % #4 is empty
+  \rightnotebox{Note...}{
+  \vspace{\textheight-1.75cm}
+  }
+  \else
+  % #4 is nonempty
+  #4
+  \fi
+  \end{column}
+  \end{columns}
+  \end{frame}
+  \renewcommand{\frametitleline}{\par\vskip-12pt\hrulefill}% タイトル下の線をもとに戻す
+\else
+% 4:3
+  \begin{frame}[t]{#2}
+    #3
+  \end{frame}
+\fi
+}
+
+% 使い方．0.2の部分を省略するとbodyと余白の比が(1-0.11*2):(0.11*2)になる
+% \centerframe[0.2]{テスト3}
+% {
+% body
+% }
+\newcommand{\centerframe}[3][.11]{
+\begin{frame}[t]{\hspace{#1\textwidth}#2}
+% \vspace{-\baselineskip}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{#1\textwidth}
+\end{column}
+\begin{column}{\textwidth-#1\textwidth-#1\textwidth}
+#3
+\end{column}
+\begin{column}{#1\textwidth}
+\end{column}
+\end{columns}
+\end{frame}
+}
